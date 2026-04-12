@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
+const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/rectify-api';
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    MongooseModule.forRoot(mongoUri),
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
