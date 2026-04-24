@@ -7,6 +7,7 @@ import { JwtPayload } from "./strategy/jwt.payload";
 import { ObjectId } from "mongodb";
 import { User } from "../user/schema/user.schema";
 import { JwtService } from "@nestjs/jwt";
+import { Types } from "mongoose";
 
 @Injectable()
 export class AuthService {
@@ -59,6 +60,10 @@ export class AuthService {
         await this.userRepository.updateOneById({ _id: user._id }, { token });
 
         return { token };
+    }
+
+    async getProfile(id: Types.ObjectId) {
+        return await this.userRepository.findOneById(id);
     }
 
     generateJWTToken(user) {

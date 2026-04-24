@@ -2,9 +2,9 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { JwtPayload } from "./jwt.payload";
 import { UserRespository } from "src/modules/user/user.repository";
-import { ObjectId } from "mongodb";
-import { UnauthorizedException } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 
+@Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
         private readonly userRepository: UserRespository
