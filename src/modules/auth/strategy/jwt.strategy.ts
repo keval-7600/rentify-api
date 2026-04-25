@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     //Auth Guard 'jwt' validation check
     async validate(req, payload: JwtPayload): Promise<any> {
         const { id } = payload;
-        const user = await this.userRepository.findOneById(id, { token: 1 })
+        const user = await this.userRepository.findOneById(id, { token: 1, name: 1, email: 1, role: 1 });
 
         if (!user || !user?.token)
             throw new UnauthorizedException(`Your account is de-activated. Please contact support for help.`);
