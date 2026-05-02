@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ListingService } from './listing.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -9,6 +9,7 @@ import { User } from '../user/schema/user.schema';
 import { RolesGuard } from 'src/shared/guards/role.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { Role } from 'src/shared/enums/role.enum';
+import { Types } from 'mongoose';
 
 @Controller('listing')
 @UseGuards(AuthGuard('jwt'))
@@ -38,5 +39,10 @@ export class ListingController {
     @Get()
     getListings() {
         return this.listingService.getListings();
+    }
+
+    @Get('/:id')
+    getListingById(@Param('id') id: string) {
+        return this.listingService.getListingById(id);
     }
 }

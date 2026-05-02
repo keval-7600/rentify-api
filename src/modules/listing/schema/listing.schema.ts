@@ -45,7 +45,11 @@ export class Listing {
     features?: string[];
 
     @Prop({default: true})
-    is_active: boolean;
+    isActive: boolean;
 }
 
 export const ListingSchema = SchemaFactory.createForClass(Listing);
+
+ListingSchema.index({ pricePerDay: 1 });
+ListingSchema.index({ "location.city": 1 });
+ListingSchema.index({ features: 1 });
