@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsEnum, IsMongoId, IsNotEmpty } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDate, IsDateString, IsEnum, IsMongoId, IsNotEmpty } from "class-validator";
 import { PaymentType } from "src/shared/enums/payment-type.enum";
 
 export class CreateBookingDto {
@@ -9,12 +10,16 @@ export class CreateBookingDto {
     listingId: string;
 
     @IsNotEmpty({ message: 'Start date is required' })
-    @IsDateString({}, { message: 'Start date must be a valid ISO date string' })
+    // @IsDateString({}, { message: 'Start date must be a valid ISO date string' })
+    @Type(() => Date)
+    @IsDate({ message: 'Start date must be a valid date' })
     @ApiProperty({ description: 'Start date of the booking', example: '2022-01-01' })
     startDate: Date;
 
     @IsNotEmpty({ message: 'End date is required' })
-    @IsDateString({}, { message: 'End date must be a valid ISO date string' })
+    // @IsDateString({}, { message: 'End date must be a valid ISO date string' })
+    @Type(() => Date)
+    @IsDate({ message: 'End date must be a valid date' })
     @ApiProperty({ description: 'End date of the booking', example: '2022-01-07' })
     endDate: Date;
 

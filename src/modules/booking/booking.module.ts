@@ -4,6 +4,8 @@ import { BookingService } from './booking.service';
 import { Module } from '@nestjs/common';
 import { Booking, BookingSchema } from './schema/booking.schema';
 import { BookingRepository } from './booking.repository';
+import { PaymentModule } from '../payment/payment.module';
+import { ListingModule } from '../listing/listing.module';
 
 @Module({
     imports: [
@@ -12,7 +14,9 @@ import { BookingRepository } from './booking.repository';
                 name: Booking.name,
                 schema: BookingSchema
             }
-        ])
+        ]),
+        PaymentModule,
+        ListingModule
     ],
     controllers: [
         BookingController,

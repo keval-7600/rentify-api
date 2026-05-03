@@ -21,5 +21,8 @@ import { ListingRepository } from './listing.repository';
         ListingService, 
         ListingRepository
     ],
+    exports: [
+        ListingService
+    ]
 })
 export class ListingModule { }

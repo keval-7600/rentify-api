@@ -1,3 +1,4 @@
+import { PaymentModule } from './modules/payment/payment.module';
 import { BookingModule } from './modules/booking/booking.module';
 import { ListingModule } from './modules/listing/listing.module';
 import { UserModule } from './modules/user/user.module';
@@ -29,6 +30,7 @@ const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/rectify-api
       ],
     }),
     BookingModule,
+    PaymentModule,
   ],
   controllers: [],
   providers: [

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Booking, BookingDocument } from "./schema/booking.schema";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 @Injectable()
 export class BookingRepository {
@@ -15,7 +15,19 @@ export class BookingRepository {
     }
 
     findOne(find, select = {}) {
-        return this.bookingModel.findOne(find, select);
+        const { _id } = find;
+        return this.bookingModel.aggregate([
+            { $match: { _id: new Types.ObjectId(_id) } },
+            {
+                $lookup: {
+                    from: 'payments',
+                    localField: '_id',
+                    foreignField: 'bookingId',
+                    as: 'payment'
+                }
+            },
+            { $unwind: { path: '$payment', preserveNullAndEmptyArrays: true } }
+        ]);
     }
 
     findAll(find = {}, select = {}) {
