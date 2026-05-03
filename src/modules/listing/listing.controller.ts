@@ -9,9 +9,11 @@ import { User } from '../user/schema/user.schema';
 import { RolesGuard } from 'src/shared/guards/role.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { Role } from 'src/shared/enums/role.enum';
-import { Types } from 'mongoose';
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('listing')
+@ApiTags('listing')
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 export class ListingController {
 
@@ -20,6 +22,8 @@ export class ListingController {
     ) {}
 
     @Post()
+    @ApiOperation({ summary: 'Create a new listing' })
+    @ApiConsumes("multipart/form-data")
     @UseInterceptors(FilesInterceptor('images', 10, {
         storage: diskStorage({
             destination: './uploads',
@@ -37,11 +41,13 @@ export class ListingController {
     }
 
     @Get()
+    @ApiOperation({ summary: 'Get all listings' })
     getListings() {
         return this.listingService.getListings();
     }
 
     @Get('/:id')
+    @ApiOperation({ summary: 'Get listing by ID' })
     getListingById(@Param('id') id: string) {
         return this.listingService.getListingById(id);
     }
